@@ -17,4 +17,16 @@ cd v2b/
 git submodule update --init
 echo '  branch = master' >> .gitmodules
 git submodule update --remote
-############Dockerfile
+安装 容器内
+wget https://getcomposer.org/download/1.9.0/composer.phar
+php composer.phar global require hirak/prestissimo
+php -d memory_limit=-1 composer.phar install
+php artisan v2board:install
+启动队列
+dc exec www bash
+php artisan horizon &
+升级
+dc exec www bash
+sh update.sh
+php artisan horizon &
+
